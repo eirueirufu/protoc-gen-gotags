@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package gotag;
+
+import "google/protobuf/descriptor.proto";
+import "gotag.proto";
+
+option go_package = "github.com/eirueirufu/protoc-gen-gotag/options";
+
+extend google.protobuf.FieldOptions {
+    string all = 1000;
+    repeated Tag tag = 1001;
+}

@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package gotag;
+
+option go_package = "github.com/eirueirufu/protoc-gen-gotag/options";
+
+message Tag {
+    string key = 1;
+    string value = 2;
+}
