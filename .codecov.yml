@@ -1,0 +1,4 @@
+ignore:
+  - "examples"
+  - "**/*.pb.go"
+  - "internal/tags/y.go"
