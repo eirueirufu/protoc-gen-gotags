@@ -45,9 +45,6 @@ func (lex *Lex) Lex(lval *yySymType) int {
 	case scanner.Ident:
 		identStr := lex.scanner.TokenText()
 		lval.tok = identStr
-		if identStr == ":" {
-			return colon
-		}
 		return ident
 	case scanner.String:
 		str := lex.scanner.TokenText()

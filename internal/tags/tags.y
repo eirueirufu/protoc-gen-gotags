@@ -10,7 +10,7 @@
 
 %start root
 
-%token <tok> ident string_lit colon 
+%token <tok> ident string_lit 
 
 %type <tags> root tags
 %type <tag> tag
