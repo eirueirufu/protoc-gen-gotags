@@ -8,21 +8,20 @@ import (
 	"go/parser"
 	"go/token"
 	"os"
-	"regexp"
 	"sort"
 	"strings"
 
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
 
+	"github.com/eirueirufu/protoc-gen-gotags/internal/tags"
 	"github.com/eirueirufu/protoc-gen-gotags/options"
 )
 
 type (
 	Replacer struct {
-		msg       map[string]msg
-		fileSet   *token.FileSet
-		tagRegexp *regexp.Regexp
+		msg     map[string]msg
+		fileSet *token.FileSet
 	}
 	msg map[string]tag
 	tag struct {
@@ -39,9 +38,8 @@ type (
 
 func NewReplacer() *Replacer {
 	return &Replacer{
-		msg:       map[string]msg{},
-		fileSet:   token.NewFileSet(),
-		tagRegexp: regexp.MustCompile(`[^\" ]*:"[^\"]*"`),
+		msg:     map[string]msg{},
+		fileSet: token.NewFileSet(),
 	}
 }
 
@@ -81,7 +79,10 @@ func (p *Replacer) replaceTags(filename string, src []byte) ([]byte, error) {
 				if field.Tag != nil {
 					tagVal = field.Tag.Value
 				}
-				replacedTag := p.replaceTag(msgName, fieldName, tagVal)
+				replacedTag, err := p.replaceTag(msgName, fieldName, tagVal)
+				if err != nil {
+					return nil, err
+				}
 				if len(replacedTag) == 0 {
 					continue
 				}
@@ -101,28 +102,31 @@ func (p *Replacer) replaceTags(filename string, src []byte) ([]byte, error) {
 	return buff.Bytes(), nil
 }
 
-func (p *Replacer) replaceTag(msgName, fieldName, tagVal string) string {
+func (p *Replacer) replaceTag(msgName, fieldName, tagVal string) (string, error) {
 	msg, ok := p.msg[msgName]
 	if !ok {
-		return tagVal
+		return tagVal, nil
 	}
 	fieldTag, ok := msg[fieldName]
 	if !ok {
-		return tagVal
+		return tagVal, nil
 	}
 	if len(fieldTag.all) > 0 {
-		return fmt.Sprintf("`%s`", fieldTag.all)
+		return fmt.Sprintf("`%s`", fieldTag.all), nil
 	}
-	tagVal = strings.Trim(tagVal, "`")
-	tags := p.tagRegexp.FindAllString(tagVal, -1)
+
+	tags, err := tags.ParseTags(tagVal)
+	if err != nil {
+		return "", fmt.Errorf("tags error on message:%s field:%s, details:%s", msgName, fieldName, err.Error())
+	}
+
 	tagKvs := make([]tagKv, 0)
 	marked := map[string]placeholderType{}
 	for _, tag := range tags {
-		strs := strings.SplitN(tag, ":", 2)
-		key := strs[0]
+		key := tag.Key
 		val, ok := fieldTag.part[key]
 		if !ok {
-			val = strings.Trim(strs[1], "\"")
+			val = tag.Value
 		}
 		tagKvs = append(tagKvs, tagKv{
 			key: key,
@@ -148,7 +152,7 @@ func (p *Replacer) replaceTag(msgName, fieldName, tagVal string) string {
 	for _, tagKv := range tagKvs {
 		tagStrs = append(tagStrs, fmt.Sprintf("%s:\"%s\"", tagKv.key, tagKv.val))
 	}
-	return fmt.Sprintf("`%s`", strings.Join(tagStrs, " "))
+	return fmt.Sprintf("`%s`", strings.Join(tagStrs, " ")), nil
 }
 
 func (p *Replacer) ParseFile(file *protogen.File) error {

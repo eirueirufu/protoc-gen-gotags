@@ -1,0 +1,115 @@
+syntax = "proto3";
+
+package testdata;
+
+import "annotations.proto";
+
+option go_package = "github.com/eirueirufu/protoc-gen-gotags/internal/replace/testdata;testdata";
+
+message Msg1 {
+    string no_tag_option = 1;
+    string append_tag = 2 [(gotags.tag) = {
+        key: "append_key",
+        value: "msg1_append_value",
+    }];
+    string replace_tag = 3 [(gotags.tag) = {
+        key: "json",
+        value: "msg1_replace_json_value",
+    }];
+    string append_tags = 4 [
+        (gotags.tag) = {
+            key: "append_key1",
+            value: "msg1_append_value1",
+        },
+        (gotags.tag) = {
+            key: "append_key2",
+            value: "msg1_append_value2",
+        }
+    ];
+    string replace_tags = 5 [
+        (gotags.tag) = {
+            key: "protobuf",
+            value: "msg1_replace_proto_value",
+        },
+        (gotags.tag) = {
+            key: "json",
+            value: "msg1_replace_json_value",
+        }
+    ];
+    string replace_and_append_tags = 6 [
+        (gotags.tag) = {
+            key: "json",
+            value: "msg1_replace_json_value",
+        },
+        (gotags.tag) = {
+            key: "append_key",
+            value: "msg1_append_value",
+        }
+    ];
+    string all = 7 [(gotags.all) = "msg1_all"];
+    string all_with_replace_and_append_tags = 8 [
+        (gotags.all) = "msg1_all",
+        (gotags.tag) = {
+            key: "json",
+            value: "msg1_replace_json_value",
+        },
+        (gotags.tag) = {
+            key: "append_key",
+            value: "msg1_append_value",
+        }
+    ];
+}
+
+message Msg2 {
+    string no_tag_option = 1;
+    string append_tag = 2 [(gotags.tag) = {
+        key: "append_key",
+        value: "msg2_append_value",
+    }];
+    string replace_tag = 3 [(gotags.tag) = {
+        key: "json",
+        value: "msg2_replace_json_value",
+    }];
+    string append_tags = 4 [
+        (gotags.tag) = {
+            key: "append_key1",
+            value: "msg2_append_value1",
+        },
+        (gotags.tag) = {
+            key: "append_key2",
+            value: "msg2_append_value2",
+        }
+    ];
+    string replace_tags = 5 [
+        (gotags.tag) = {
+            key: "protobuf",
+            value: "msg2_replace_proto_value",
+        },
+        (gotags.tag) = {
+            key: "json",
+            value: "msg2_replace_json_value",
+        }
+    ];
+    string replace_and_append_tags = 6[
+        (gotags.tag) = {
+            key: "json",
+            value: "msg2_replace_json_value",
+        },
+        (gotags.tag) = {
+            key: "append_key",
+            value: "msg2_append_value",
+        }
+    ];
+    string all = 7 [(gotags.all) = "msg2_all"];
+    string all_with_replace_and_append_tags = 8 [
+        (gotags.all) = "msg2_all",
+        (gotags.tag) = {
+            key: "json",
+            value: "msg2_replace_json_value",
+        },
+        (gotags.tag) = {
+            key: "append_key",
+            value: "msg2_append_value",
+        }
+    ];
+}

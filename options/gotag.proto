@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package gotag;
+package gotags;
 
 option go_package = "github.com/eirueirufu/protoc-gen-gotags/options";
 

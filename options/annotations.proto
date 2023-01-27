@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package gotag;
+package gotags;
 
 import "google/protobuf/descriptor.proto";
 import "gotag.proto";
