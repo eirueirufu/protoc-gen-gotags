@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package gotag;
 
-option go_package = "github.com/eirueirufu/protoc-gen-gotag/options";
+option go_package = "github.com/eirueirufu/protoc-gen-gotags/options";
 
 message Tag {
     string key = 1;

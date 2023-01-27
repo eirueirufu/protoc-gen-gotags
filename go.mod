@@ -1,4 +1,4 @@
-module github.com/eirueirufu/protoc-gen-gotag
+module github.com/eirueirufu/protoc-gen-gotags
 
 go 1.19
 

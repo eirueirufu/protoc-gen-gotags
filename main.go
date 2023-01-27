@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/eirueirufu/protoc-gen-gotag/internal/replace"
+	"github.com/eirueirufu/protoc-gen-gotags/internal/replace"
 	"google.golang.org/protobuf/compiler/protogen"
 )
 

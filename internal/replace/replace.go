@@ -15,7 +15,7 @@ import (
 	"google.golang.org/protobuf/compiler/protogen"
 	"google.golang.org/protobuf/proto"
 
-	"github.com/eirueirufu/protoc-gen-gotag/options"
+	"github.com/eirueirufu/protoc-gen-gotags/options"
 )
 
 type (

@@ -5,7 +5,7 @@ package gotag;
 import "google/protobuf/descriptor.proto";
 import "gotag.proto";
 
-option go_package = "github.com/eirueirufu/protoc-gen-gotag/options";
+option go_package = "github.com/eirueirufu/protoc-gen-gotags/options";
 
 extend google.protobuf.FieldOptions {
     string all = 1000;
