@@ -11,6 +11,8 @@ In [protoc-gen-go](https://github.com/protocolbuffers/protobuf-go), it is diffic
 
 ## Install
 
+Download in [release page](https://github.com/eirueirufu/protoc-gen-gotags/releases) or use `go install`
+
 ```golang
 go install github.com/eirueirufu/protoc-gen-gotags@latest
 ```
