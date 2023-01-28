@@ -46,9 +46,9 @@ message Msg1 {
             value: "msg1_append_value",
         }
     ];
-    string all = 7 [(gotags.all) = "msg1_all"];
+    string all = 7 [(gotags.all) = "all:\"msg1_all\""];
     string all_with_replace_and_append_tags = 8 [
-        (gotags.all) = "msg1_all",
+        (gotags.all) = "all:\"msg1_all\"",
         (gotags.tag) = {
             key: "json",
             value: "msg1_replace_json_value",
@@ -100,9 +100,9 @@ message Msg2 {
             value: "msg2_append_value",
         }
     ];
-    string all = 7 [(gotags.all) = "msg2_all"];
+    string all = 7 [(gotags.all) = "all:\"msg2_all\""];
     string all_with_replace_and_append_tags = 8 [
-        (gotags.all) = "msg2_all",
+        (gotags.all) = "all:\"msg2_all\"",
         (gotags.tag) = {
             key: "json",
             value: "msg2_replace_json_value",

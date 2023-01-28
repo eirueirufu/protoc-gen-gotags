@@ -1,6 +1,7 @@
 package replace
 
 import (
+	"crypto/md5"
 	"os"
 	"reflect"
 	"testing"
@@ -48,10 +49,10 @@ func TestReplacer_replaceTags(t *testing.T) {
 				},
 			},
 			"All": {
-				all: "msg1_all",
+				all: "all:\"msg1_all\"",
 			},
 			"AllWithReplaceAndAppendTags": {
-				all: "msg1_all",
+				all: "all:\"msg1_all\"",
 				part: map[string]string{
 					"json":       "msg1_replace_json_value",
 					"append_key": "msg1_append_value",
@@ -89,10 +90,10 @@ func TestReplacer_replaceTags(t *testing.T) {
 				},
 			},
 			"All": {
-				all: "msg2_all",
+				all: "all:\"msg2_all\"",
 			},
 			"AllWithReplaceAndAppendTags": {
-				all: "msg2_all",
+				all: "all:\"msg2_all\"",
 				part: map[string]string{
 					"json":       "msg2_replace_json_value",
 					"append_key": "msg2_append_value",
@@ -106,7 +107,8 @@ func TestReplacer_replaceTags(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !reflect.DeepEqual(got, want) {
-		t.Fatalf("Replacer.replaceTags() = %s, want %s", got, want)
+	gotMd5, wantMd5 := md5.Sum(got), md5.Sum(want)
+	if !reflect.DeepEqual(gotMd5, wantMd5) {
+		t.Fatalf("Replacer.replaceTags() = %x, want %x", gotMd5, wantMd5)
 	}
 }
