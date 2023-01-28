@@ -6,7 +6,6 @@ import (
 	"text/scanner"
 )
 
-//go:generate goyacc tags.y
 type (
 	Tags []*Tag
 	Tag  struct {
