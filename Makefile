@@ -14,7 +14,7 @@ test:
 
 .PHONY: test-coverage
 test-coverage: 
-	go test -race -coverprofile=profile..txt -covermode=atomic ./...
+	go test -race -coverprofile=profile.txt -covermode=atomic ./...
 
 .PHONY: build
 build: 
