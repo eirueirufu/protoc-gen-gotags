@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package testdata;
 
-import "annotations.proto";
+import "options.proto";
 
 option go_package = "github.com/eirueirufu/protoc-gen-gotags/internal/replace/testdata;testdata";
 
