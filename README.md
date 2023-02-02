@@ -19,9 +19,9 @@ go install github.com/eirueirufu/protoc-gen-gotags@latest
 
 ## Usage
 
-- define options
-- use `protoc-gen-go` to generate your `.pb.go` file
-- use `protoc-gen-gotags` to replace the generated `.pb.go` file tags
+1. define options
+2. use `protoc-gen-go` to generate your `.pb.go` file
+3. use `protoc-gen-gotags` to replace the generated `.pb.go` file tags, in this cmd, you should use the protoc source type `source_relative` 
 
 field options example：
 
