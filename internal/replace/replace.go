@@ -2,6 +2,7 @@ package replace
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"go/ast"
 	"go/format"
@@ -159,6 +160,9 @@ func (p *Replacer) ParseFile(file *protogen.File) error {
 	filename := file.GeneratedFilenamePrefix + ".pb.go"
 	src, err := os.ReadFile(filename)
 	if err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return fmt.Errorf("make sure you have used the path type 'source_relative', %w", err)
+		}
 		return err
 	}
 	for _, msg := range file.Messages {
