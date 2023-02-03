@@ -16,7 +16,7 @@ func TestReplacer_replaceTags(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	replace := NewReplacer()
+	replace := NewReplacer(".")
 	replace.msg = map[string]msg{
 		"Msg1": {
 			"NoTagOption": {},

@@ -9,6 +9,7 @@ import (
 	"go/parser"
 	"go/token"
 	"os"
+	"path"
 	"sort"
 	"strings"
 
@@ -21,6 +22,7 @@ import (
 
 type (
 	Replacer struct {
+		goOut   string
 		msg     map[string]msg
 		fileSet *token.FileSet
 	}
@@ -37,8 +39,9 @@ type (
 	placeholderType struct{}
 )
 
-func NewReplacer() *Replacer {
+func NewReplacer(goOut string) *Replacer {
 	return &Replacer{
+		goOut:   goOut,
 		msg:     map[string]msg{},
 		fileSet: token.NewFileSet(),
 	}
@@ -158,10 +161,11 @@ func (p *Replacer) replaceTag(msgName, fieldName, tagVal string) (string, error)
 
 func (p *Replacer) ParseFile(file *protogen.File) error {
 	filename := file.GeneratedFilenamePrefix + ".pb.go"
+	filename = path.Join(p.goOut, filename)
 	src, err := os.ReadFile(filename)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
-			return fmt.Errorf("make sure you have used the path type 'source_relative', %w", err)
+			return fmt.Errorf("%w\nuse go_out param to specify go_out dir, such as '--gotags_opt=go_out=.'", err)
 		}
 		return err
 	}
